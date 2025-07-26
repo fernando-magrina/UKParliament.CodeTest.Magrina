@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { PersonViewModel } from '../../models/person-view-model';
 import { PersonEditorComponent } from '../person-editor/person-editor.component';
 import { PersonService } from '../../services/person.service';
+import { PersonListComponent } from '../person-list/person-list.component';
 
 @Component({
   selector: 'app-person-management',
@@ -11,6 +12,7 @@ import { PersonService } from '../../services/person.service';
 
 export class PersonManagementComponent {
   @ViewChild(PersonEditorComponent) personEditor!: PersonEditorComponent;
+  @ViewChild(PersonListComponent) personList!: PersonListComponent;
   selectedPerson: PersonViewModel | null = null;
   isMobile = false;
   spinnerAction: 'save' | 'cancel' | null = null;
@@ -36,15 +38,18 @@ export class PersonManagementComponent {
     this.personService.savePerson(person).subscribe({
       next: () => {
         this.selectedPerson = null;
+        alert('✅ Person saved successfully.')
         console.log('Saved person:', person);
       },
       error: () => {
-        // handle error
+        alert('❌ Failed to save person. Please try again.')
+          this.spinnerAction = null;
       },
-      complete: () => {
-        this.spinnerAction = null;
-      }
-    });
+        complete: () => {
+          this.spinnerAction = null;
+          this.personList.getListOfPeople();
+        }
+      });
   }
 
   onCancel() {

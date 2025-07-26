@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services;
 using UKParliament.CodeTest.Services.Interfaces;
+using UKParliament.CodeTest.Web.Mappers;
+using UKParliament.CodeTest.Web.Mappers.Interfaces;
 
 namespace UKParliament.CodeTest.Web;
 
@@ -20,6 +22,7 @@ public class Program
 
         builder.Services.AddScoped<IPersonService, PersonService>();
         builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+        builder.Services.AddScoped<IPersonMapper, PersonMapper>();
 
         var app = builder.Build();
 

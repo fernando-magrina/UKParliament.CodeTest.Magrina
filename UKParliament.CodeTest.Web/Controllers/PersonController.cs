@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using UKParliament.CodeTest.Services.Interfaces;
+using UKParliament.CodeTest.Web.Mappers.Interfaces;
 using UKParliament.CodeTest.Web.ViewModels;
 
 namespace UKParliament.CodeTest.Web.Controllers;
@@ -10,10 +11,12 @@ namespace UKParliament.CodeTest.Web.Controllers;
 public class PersonController : ControllerBase
 {
     private readonly IPersonService personService;
+    private readonly IPersonMapper mapper;
 
-    public PersonController(IPersonService personService)
+    public PersonController(IPersonService personService, IPersonMapper mapper)
     {
         this.personService = personService;
+        this.mapper = mapper;
     }
 
     [Route("{id:int}")]
@@ -54,10 +57,11 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<List<PersonViewModel>>> UpdatePersonAsync(PersonViewModel person)
+    public async Task<ActionResult<List<PersonViewModel>>> UpdatePersonAsync(PersonViewModel personView)
     {
         try
         {
+            var person = mapper.ToEntity(personView);
             var listOfPeople = await personService.UpdatePersonAsync(person);
             return Ok(listOfPeople);
         }

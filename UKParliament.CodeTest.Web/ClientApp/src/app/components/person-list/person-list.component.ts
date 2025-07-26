@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { PersonViewModel } from '../../models/person-view-model';
 import { PersonService } from '../../services/person.service';
 import { DepartmentViewModel } from '../../models/department-view-model';
@@ -19,6 +19,10 @@ export class PersonListComponent {
   listOfPeople: PersonViewModel[] = [];
   searchText = '';
   departments: DepartmentViewModel[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+      this.getListOfPeople(); 
+  }
 
   constructor(private personService: PersonService) {
     this.getListOfPeople();
