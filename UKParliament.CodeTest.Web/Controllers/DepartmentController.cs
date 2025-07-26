@@ -7,13 +7,13 @@ namespace UKParliament.CodeTest.Web.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PersonController : ControllerBase
+public class DepartmentController : ControllerBase
 {
-    private readonly IPersonService personService;
+    private readonly IDepartmentService departmentService;
 
-    public PersonController(IPersonService personService)
+    public DepartmentController(IDepartmentService departmentService)
     {
-        this.personService = personService;
+        this.departmentService = departmentService;
     }
 
     [Route("{id:int}")]
@@ -22,7 +22,7 @@ public class PersonController : ControllerBase
     {
         try
         {
-            var person = await personService.GetByIdAsync(id);
+            var person = await departmentService.GetDepartmentByIdAsync(id);
             return Ok(person);
         }
         catch (KeyNotFoundException ex)
@@ -36,12 +36,12 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<PersonViewModel>>> GetPeopleAsync()
+    public async Task<ActionResult<List<PersonViewModel>>> GetDepartmentsAsync()
     {
         try
         {
-            var listOfPeople = await personService.GetPeopleAsync();
-            return Ok(listOfPeople);
+            var listOfDepartments = await departmentService.GetDepartmentsAsync();
+            return Ok(listOfDepartments);
         }
         catch (KeyNotFoundException ex)
         {
