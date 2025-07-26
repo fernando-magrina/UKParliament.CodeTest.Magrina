@@ -1,19 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { PersonManagementComponent } from './components/person-management/person-management.component';
+import { PersonEditorComponent } from './components/person-editor/person-editor.component';
+import { PersonListComponent } from './components/person-list/person-list.component';
 
 @NgModule({ declarations: [
         AppComponent,
-        HomeComponent
+        PersonManagementComponent,
+        PersonEditorComponent,
+        PersonListComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-        FormsModule,
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    ReactiveFormsModule,
+      FormsModule,
         RouterModule.forRoot([
-            { path: '', component: HomeComponent, pathMatch: 'full' }
+            { path: '', component: PersonManagementComponent, pathMatch: 'full' },
+            { path: '', component: PersonEditorComponent, pathMatch: 'full' },
+            { path: '', component: PersonListComponent, pathMatch: 'full' }
         ])], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

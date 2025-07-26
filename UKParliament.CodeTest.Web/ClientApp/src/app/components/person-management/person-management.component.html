@@ -1,0 +1,11 @@
+<div [ngClass]="isMobile ? 'vertical-container' : 'app-container'">
+  <div class="list-panel">
+    <app-person-list (select)="onPersonSelected($event)"></app-person-list>
+  </div>
+  <div class="editor-panel">
+    <app-person-editor [selectedPerson]="selectedPerson"
+                       (save)="onSave($event)"
+                       (cancel)="onCancel()">
+    </app-person-editor>
+  </div>
+</div>

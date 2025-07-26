@@ -1,0 +1,33 @@
+<div class="row align-items-center">
+  <div class="col-5">
+    <h2 *ngIf="selectedPerson">Edit Person</h2>
+    <h2 *ngIf="!selectedPerson">Add Person</h2>
+  </div>
+  <div class="col-1 text-center">
+    <h1>
+      <i *ngIf="selectedPerson" class="bi bi-pencil-fill" aria-hidden="true"></i>
+      <i *ngIf="!selectedPerson" class="bi bi-person-plus-fill" aria-hidden="true"></i>
+    </h1>
+  </div>
+</div>
+
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+  <label>First Name</label>
+  <input formControlName="firstName" type="text" />
+
+  <label>Last Name</label>
+  <input formControlName="lastName" type="text" />
+
+  <label>Date of Birth</label>
+  <input formControlName="dob" type="date" />
+
+  <label>Department</label>
+  <select formControlName="department">
+    <option *ngFor="let dept of departments" [ngValue]="dept">
+      {{ dept.name }}
+    </option>
+  </select>
+
+  <button type="submit">Save</button>
+  <button type="button" (click)="clear()">Cancel</button>
+</form>

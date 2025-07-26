@@ -1,0 +1,10 @@
+<h2>People</h2>
+<input type="text" placeholder="Search..." [(ngModel)]="searchText" class="search-input" />
+<ul>
+  <li *ngFor="let person of filteredPeople()" (click)="onSelect(person)">
+    {{ person.firstName }} {{ person.lastName }}
+    <span class="department">{{ person.department.name || 'N/A' }}</span>
+  </li>
+</ul>
+<button (click)="addNewPerson()">Add New Person</button>
+
