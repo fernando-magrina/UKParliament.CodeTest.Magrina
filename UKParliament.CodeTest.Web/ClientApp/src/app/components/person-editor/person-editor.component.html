@@ -28,6 +28,13 @@
     </option>
   </select>
 
-  <button type="submit" [disabled]="personForm.invalid">Save</button>
-  <button type="button" (click)="clear()">Cancel</button>
+  <button type="submit" [disabled]="personForm.invalid || spinnerAction === 'save'">
+    <span *ngIf="spinnerAction === 'save'" class="spinner-border spinner-border-sm" role="status"></span>
+    <span *ngIf="spinnerAction !== 'save'">Save</span>
+  </button>
+
+  <button type="button" (click)="clear()" [disabled]="spinnerAction === 'cancel'">
+    <span *ngIf="spinnerAction === 'cancel'" class="spinner-border spinner-border-sm" role="status"></span>
+    <span *ngIf="spinnerAction !== 'cancel'">Cancel</span>
+  </button>
 </form>

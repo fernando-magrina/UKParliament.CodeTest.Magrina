@@ -49,4 +49,15 @@ public class PersonService : IPersonService
             Department = p.Department,
         }).ToList();
     }
+
+    public async Task<Person> UpdatePersonAsync(Person person)
+    {
+        this.context.People.Update(person);
+        var updatedPerson = await this.context.SaveChangesAsync();
+
+        if (updatedPerson == null)
+            throw new KeyNotFoundException($"{person.FirstName} {person.LastName} not updated.");
+
+        return person;
+    }
 }

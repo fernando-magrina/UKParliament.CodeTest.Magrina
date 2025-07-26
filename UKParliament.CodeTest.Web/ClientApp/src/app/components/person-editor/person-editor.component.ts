@@ -14,6 +14,7 @@ export class PersonEditorComponent implements OnChanges {
   @Output() save = new EventEmitter<PersonViewModel>();
   @Output() cancel = new EventEmitter<void>();
   @Input() departments: DepartmentViewModel[] = [];
+  @Input() spinnerAction: 'save' | 'cancel' | null = null;
 
   personForm!: FormGroup;
   private departmentsLoaded = false;

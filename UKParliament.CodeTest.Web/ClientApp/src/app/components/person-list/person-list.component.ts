@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { PersonViewModel } from '../../models/person-view-model';
 import { PersonService } from '../../services/person.service';
 import { DepartmentViewModel } from '../../models/department-view-model';
@@ -14,6 +14,8 @@ import { PersonEditorComponent } from '../person-editor/person-editor.component'
 export class PersonListComponent {
   @ViewChild(PersonEditorComponent) personEditor!: PersonEditorComponent;
   @Output() select = new EventEmitter<PersonViewModel>();
+  @Input() spinnerAction: 'add' | null = null;
+
   listOfPeople: PersonViewModel[] = [];
   searchText = '';
   departments: DepartmentViewModel[] = [];

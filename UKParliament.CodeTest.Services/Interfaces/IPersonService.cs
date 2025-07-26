@@ -7,4 +7,6 @@ public interface IPersonService
     Task<Person?> GetByIdAsync(int id);
 
     Task<List<Person>> GetPeopleAsync();
+
+    Task<Person> UpdatePersonAsync(Person person);
 }

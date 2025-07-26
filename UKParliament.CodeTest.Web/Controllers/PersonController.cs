@@ -52,4 +52,22 @@ public class PersonController : ControllerBase
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+
+    [HttpPut]
+    public async Task<ActionResult<List<PersonViewModel>>> UpdatePersonAsync(PersonViewModel person)
+    {
+        try
+        {
+            var listOfPeople = await personService.UpdatePersonAsync(person);
+            return Ok(listOfPeople);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 }
