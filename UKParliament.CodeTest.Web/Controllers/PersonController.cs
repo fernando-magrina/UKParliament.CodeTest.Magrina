@@ -18,7 +18,7 @@ public class PersonController : ControllerBase
 
     [Route("{id:int}")]
     [HttpGet]
-    public async Task<ActionResult<PersonViewModel>> GetByIdAsync(int id)
+    public async Task<ActionResult<PersonViewModel>> GetPersonByIdAsync(int id)
     {
         try
         {
