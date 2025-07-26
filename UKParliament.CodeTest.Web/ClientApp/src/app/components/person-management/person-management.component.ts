@@ -14,7 +14,7 @@ export class PersonManagementComponent {
   isMobile = false;
 
   ngOnInit(): void {
-    this.isMobile = window.innerWidth < 768; // or any breakpoint you choose
+    this.isMobile = window.innerWidth < 768;
     window.addEventListener('resize', () => {
       this.isMobile = window.innerWidth < 768;
     });

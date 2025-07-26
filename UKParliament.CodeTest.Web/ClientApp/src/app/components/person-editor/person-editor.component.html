@@ -1,5 +1,5 @@
 <div class="row align-items-center">
-  <div class="col-5">
+  <div class="col-6">
     <h2 *ngIf="selectedPerson">Edit Person</h2>
     <h2 *ngIf="!selectedPerson">Add Person</h2>
   </div>
@@ -28,6 +28,6 @@
     </option>
   </select>
 
-  <button type="submit">Save</button>
+  <button type="submit" [disabled]="personForm.invalid">Save</button>
   <button type="button" (click)="clear()">Cancel</button>
 </form>

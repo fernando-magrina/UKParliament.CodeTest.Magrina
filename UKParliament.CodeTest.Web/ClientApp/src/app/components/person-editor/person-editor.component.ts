@@ -100,5 +100,4 @@ export class PersonEditorComponent implements OnChanges {
       department: null
     });
   }
-
 }
