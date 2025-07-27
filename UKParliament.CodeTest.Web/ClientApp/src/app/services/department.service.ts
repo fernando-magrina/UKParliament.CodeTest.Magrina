@@ -9,10 +9,6 @@ import { DepartmentViewModel } from '../models/department-view-model';
 export class DepartmentService {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
-  getDepartmentById(id: number): Observable<DepartmentViewModel> {
-    return this.http.get<DepartmentViewModel>(this.baseUrl + `api/department/${id}`)
-  }
-
   getListOfDepartment(): Observable<DepartmentViewModel[]> {
     return this.http.get<DepartmentViewModel[]>(this.baseUrl + 'api/department');
   }
