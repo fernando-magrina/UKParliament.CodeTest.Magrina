@@ -1,34 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-using UKParliament.CodeTest.Data;
+﻿using UKParliament.CodeTest.Data;
+using UKParliament.CodeTest.Data.Repositories.Interfaces;
 using UKParliament.CodeTest.Services.Interfaces;
 
 namespace UKParliament.CodeTest.Services;
 
 public class PersonService : IPersonService
 {
-    private readonly PersonManagerContext context;
+    private readonly IPersonRepository personRepository;
+    private readonly IDepartmentRepository depotRepository;
 
-    public PersonService(PersonManagerContext context)
+    public PersonService(IPersonRepository personRepository, IDepartmentRepository depotRepository)
     {
-        this.context = context;
-    }
-
-    public async Task<Person?> GetByIdAsync(int id)
-    {
-        var person = await this.context.People.FindAsync(id);
-
-        if (person == null)
-            throw new KeyNotFoundException($"Person with ID {id} not found.");
-
-        return person;
+        this.personRepository = personRepository;
+        this.depotRepository = depotRepository;
     }
 
     public async Task<List<Person>> GetPeopleAsync()
     {
-        var people = await this.context.People
-               .Include(p => p.Department)
-               .ToListAsync();
+        var people = await this.personRepository.GetAllPeopleDataAsync();
 
         if (people == null)
             throw new KeyNotFoundException($"No people found.");
@@ -38,22 +27,15 @@ public class PersonService : IPersonService
 
     public async Task<bool> UpdatePersonAsync(Person person)
     {
-        this.context.People.Update(person);
-        var updatedPerson = await this.context.SaveChangesAsync();
-
-        return updatedPerson > 0;
+        return await this.personRepository.UpdatePersonDataAsync(person);
     }
 
     public async Task<bool> AddPersonAsync(Person person)
     {
-        if (person.Department != null)
-        {
-            var existingDept = await context.Departments.FindAsync(person.Department.Id);
-            person.Department = existingDept;
-        }
+        person.DepartmentId = person.Department.Id;
+        person.Department = null;
 
-        this.context.People.Add(person);
-        var addedPerson = await this.context.SaveChangesAsync();
+        var addedPerson = await this.personRepository.AddAsync(person);
         return true;
     }
 }

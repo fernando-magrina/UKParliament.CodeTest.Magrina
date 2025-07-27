@@ -25,6 +25,7 @@
 
   <label for="department">Department</label>
   <select id="department" formControlName="department" class="department-dropdown">
+    <option [ngValue]="null" disabled selected>Please select...</option>
     <option *ngFor="let dept of departments" [ngValue]="dept">{{ dept.name }}</option>
   </select>
 

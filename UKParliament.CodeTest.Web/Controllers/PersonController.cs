@@ -19,25 +19,6 @@ public class PersonController : ControllerBase
         this.mapper = mapper;
     }
 
-    [Route("{id:int}")]
-    [HttpGet]
-    public async Task<ActionResult<PersonViewModel>> GetPersonByIdAsync(int id)
-    {
-        try
-        {
-            var person = await personService.GetByIdAsync(id);
-            return Ok(person);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
-    }
-
     [HttpGet]
     public async Task<ActionResult<List<PersonViewModel>>> GetPeopleAsync()
     {
