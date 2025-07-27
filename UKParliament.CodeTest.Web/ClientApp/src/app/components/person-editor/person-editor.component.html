@@ -1,17 +1,19 @@
 <div class="row align-items-center">
   <div class="col-6">
-    <h2 *ngIf="selectedPerson">Edit Person</h2>
-    <h2 *ngIf="!selectedPerson">Add Person</h2>
+    <h2 *ngIf="mode === 'edit'">Edit Person</h2>
+    <h2 *ngIf="mode === 'add'">Add Person</h2>
   </div>
   <div class="col-1 text-center">
     <h1>
-      <i *ngIf="selectedPerson" class="bi bi-pencil-fill" aria-hidden="true"></i>
-      <i *ngIf="!selectedPerson" class="bi bi-person-plus-fill" aria-hidden="true"></i>
+      <i *ngIf="mode === 'edit'" class="bi bi-pencil-fill" aria-hidden="true"></i>
+      <i *ngIf="mode === 'add'" class="bi bi-person-plus-fill" aria-hidden="true"></i>
     </h1>
   </div>
 </div>
 
 <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="id" />
+
   <label>First Name</label>
   <input formControlName="firstName" type="text" />
 
@@ -21,20 +23,20 @@
   <label>Date of Birth</label>
   <input formControlName="dob" type="date" />
 
-  <label>Department</label>
-  <select formControlName="department">
-    <option *ngFor="let dept of departments" [ngValue]="dept">
-      {{ dept.name }}
-    </option>
+  <label for="department">Department</label>
+  <select id="department" formControlName="department" class="department-dropdown">
+    <option *ngFor="let dept of departments" [ngValue]="dept">{{ dept.name }}</option>
   </select>
 
-  <button type="submit" [disabled]="personForm.invalid || spinnerAction === 'save'">
-    <span *ngIf="spinnerAction === 'save'" class="spinner-border spinner-border-sm" role="status"></span>
-    <span *ngIf="spinnerAction !== 'save'">Save</span>
-  </button>
+  <div class="button-group">
+    <button type="submit" [disabled]="personForm.invalid || spinnerAction === 'save'">
+      <span *ngIf="spinnerAction === 'save'" class="spinner-border spinner-border-sm" role="status"></span>
+      <span *ngIf="spinnerAction !== 'save'">{{ mode === 'add' ? 'Add' : 'Save' }}</span>
+    </button>
 
-  <button type="button" (click)="clear()" [disabled]="spinnerAction === 'cancel'">
-    <span *ngIf="spinnerAction === 'cancel'" class="spinner-border spinner-border-sm" role="status"></span>
-    <span *ngIf="spinnerAction !== 'cancel'">Cancel</span>
-  </button>
+    <button type="button" (click)="clear()" [disabled]="spinnerAction === 'cancel'">
+      <span *ngIf="spinnerAction === 'cancel'" class="spinner-border spinner-border-sm" role="status"></span>
+      <span *ngIf="spinnerAction !== 'cancel'">Cancel</span>
+    </button>
+  </div>
 </form>

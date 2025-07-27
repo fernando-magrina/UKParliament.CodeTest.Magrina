@@ -13,15 +13,16 @@ import { PersonEditorComponent } from '../person-editor/person-editor.component'
 
 export class PersonListComponent {
   @ViewChild(PersonEditorComponent) personEditor!: PersonEditorComponent;
-  @Output() select = new EventEmitter<PersonViewModel>();
+  @Output() select = new EventEmitter<{ person: PersonViewModel, mode: 'add' | 'edit' }>();
   @Input() spinnerAction: 'add' | null = null;
+  @Input() selectedPerson: PersonViewModel | null = null;
 
   listOfPeople: PersonViewModel[] = [];
   searchText = '';
   departments: DepartmentViewModel[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.getListOfPeople(); 
+    this.getListOfPeople();
   }
 
   constructor(private personService: PersonService) {
@@ -30,7 +31,9 @@ export class PersonListComponent {
 
   getListOfPeople(): void {
     this.personService.getListOfPeople().subscribe({
-      next: (result) => this.listOfPeople = result,
+      next: (result) => {
+        this.listOfPeople = result
+},
       error: (e) => console.error('Error loading people', e)
     });
   }
@@ -42,23 +45,18 @@ export class PersonListComponent {
   }
 
   onSelect(person: PersonViewModel): void {
-    this.select.emit(person);
+    this.select.emit({ person, mode: 'edit' });
   }
 
   addNewPerson(): void {
-    //this.personEditor.selectedPerson = null;
-    this.personEditor.resetForm();
-    this.select.emit();
-  }
+    const emptyPerson: PersonViewModel = {
+      id: 0,
+      firstName: '',
+      lastName: '',
+      dob: '',
+      department: null!
+    };
 
-  onAdd(person: PersonViewModel): void {
-    console.log('Adding new person ---------------------------- : ', person);
-    //this.personService.addPerson(person).subscribe({
-    //  next: () => {
-    //    this.getListOfPeople(); // refresh list
-    //    this.closeAddModal();
-    //  },
-    //  error: err => console.error('Add failed', err)
-    //});
+    this.select.emit({ person: emptyPerson, mode: 'add' });
   }
 }

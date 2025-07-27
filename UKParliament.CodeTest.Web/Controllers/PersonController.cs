@@ -57,13 +57,32 @@ public class PersonController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<List<PersonViewModel>>> UpdatePersonAsync(PersonViewModel personView)
+    public async Task<ActionResult<bool>> UpdatePersonAsync(PersonViewModel personView)
     {
         try
         {
             var person = mapper.ToEntity(personView);
-            var listOfPeople = await personService.UpdatePersonAsync(person);
-            return Ok(listOfPeople);
+            var isUpdatededPerson = await personService.UpdatePersonAsync(person);
+            return Ok(isUpdatededPerson);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<bool>> PostPersonAsync(PersonViewModel personView)
+    {
+        try
+        {
+            var person = mapper.ToEntity(personView);
+            var isAddedPerson = await personService.AddPersonAsync(person);
+            return Ok(isAddedPerson);
         }
         catch (KeyNotFoundException ex)
         {

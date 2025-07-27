@@ -15,7 +15,8 @@ export class PersonManagementComponent {
   @ViewChild(PersonListComponent) personList!: PersonListComponent;
   selectedPerson: PersonViewModel | null = null;
   isMobile = false;
-  spinnerAction: 'save' | 'cancel' | null = null;
+  spinnerAction: 'save' | 'cancel' | 'add' | null = null;
+  mode: 'add' | 'edit' | null = null;
 
   constructor(private personService: PersonService) {
 
@@ -28,8 +29,10 @@ export class PersonManagementComponent {
     });
   }
 
-  onPersonSelected(person: PersonViewModel): void {
-    this.selectedPerson = person;
+
+  onPersonSelected(selection: { person: PersonViewModel, mode: 'add' | 'edit' }): void {
+    this.selectedPerson = selection.person;
+    this.mode = selection.mode;
   }
 
   onSave(person: PersonViewModel) {
@@ -39,7 +42,6 @@ export class PersonManagementComponent {
       next: () => {
         this.selectedPerson = null;
         alert('✅ Person saved successfully.')
-        console.log('Saved person:', person);
       },
       error: () => {
         alert('❌ Failed to save person. Please try again.')
@@ -50,6 +52,26 @@ export class PersonManagementComponent {
           this.personList.getListOfPeople();
         }
       });
+  }
+
+  onAdd(person: PersonViewModel) {
+    this.spinnerAction = 'add';
+    person.id = 0;
+
+    this.personService.addPerson(person).subscribe({
+      next: () => {
+        this.selectedPerson = null;
+        alert('✅ Person added successfully.')
+      },
+      error: () => {
+        alert('❌ Failed to add person. Please try again.')
+        this.spinnerAction = null;
+      },
+      complete: () => {
+        this.spinnerAction = null;
+        this.personList.getListOfPeople();
+      }
+    });
   }
 
   onCancel() {

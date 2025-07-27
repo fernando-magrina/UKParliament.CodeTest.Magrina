@@ -8,5 +8,7 @@ public interface IPersonService
 
     Task<List<Person>> GetPeopleAsync();
 
-    Task<Person> UpdatePersonAsync(Person person);
+    Task<bool> UpdatePersonAsync(Person person);
+
+    Task<bool> AddPersonAsync(Person person);
 }

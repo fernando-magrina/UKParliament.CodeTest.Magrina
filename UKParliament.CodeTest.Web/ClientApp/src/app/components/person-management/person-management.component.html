@@ -10,7 +10,9 @@
     <app-person-editor *ngIf="selectedPerson"
                        [selectedPerson]="selectedPerson"
                        [spinnerAction]="spinnerAction"
+                       [mode]="mode"
                        (save)="onSave($event)"
+                       (add)="onAdd($event)"
                        (cancel)="onCancel()">
     </app-person-editor>
   </div>

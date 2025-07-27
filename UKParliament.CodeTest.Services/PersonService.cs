@@ -21,14 +21,7 @@ public class PersonService : IPersonService
         if (person == null)
             throw new KeyNotFoundException($"Person with ID {id} not found.");
 
-        return new Person
-        {
-            Id = person.Id,
-            FirstName = person.FirstName,
-            LastName = person.LastName,
-            DOB = person.DOB,
-            Department = person.Department
-        };
+        return person;
     }
 
     public async Task<List<Person>> GetPeopleAsync()
@@ -40,24 +33,27 @@ public class PersonService : IPersonService
         if (people == null)
             throw new KeyNotFoundException($"No people found.");
 
-        return people.Select(p => new Person
-        {
-            Id = p.Id,
-            FirstName = p.FirstName,
-            LastName = p.LastName,
-            DOB = p.DOB,
-            Department = p.Department,
-        }).ToList();
+        return people.ToList();
     }
 
-    public async Task<Person> UpdatePersonAsync(Person person)
+    public async Task<bool> UpdatePersonAsync(Person person)
     {
         this.context.People.Update(person);
         var updatedPerson = await this.context.SaveChangesAsync();
 
-        if (updatedPerson == null)
-            throw new KeyNotFoundException($"{person.FirstName} {person.LastName} not updated.");
+        return updatedPerson > 0;
+    }
 
-        return person;
+    public async Task<bool> AddPersonAsync(Person person)
+    {
+        if (person.Department != null)
+        {
+            var existingDept = await context.Departments.FindAsync(person.Department.Id);
+            person.Department = existingDept;
+        }
+
+        this.context.People.Add(person);
+        var addedPerson = await this.context.SaveChangesAsync();
+        return true;
     }
 }

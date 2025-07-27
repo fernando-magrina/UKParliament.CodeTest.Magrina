@@ -21,4 +21,8 @@ export class PersonService {
   savePerson(person: PersonViewModel): Observable<PersonViewModel> {
     return this.http.put<PersonViewModel>(this.baseUrl + 'api/person', person);
   }
+
+  addPerson(person: PersonViewModel): Observable<PersonViewModel> {
+    return this.http.post<PersonViewModel>(this.baseUrl + 'api/person', person);
+  }
 }

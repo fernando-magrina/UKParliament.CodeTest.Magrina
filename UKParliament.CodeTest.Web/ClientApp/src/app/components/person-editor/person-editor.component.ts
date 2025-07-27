@@ -10,11 +10,14 @@ import { DepartmentService } from '../../services/department.service';
   styleUrls: ['./person-editor.component.scss']
 })
 export class PersonEditorComponent implements OnChanges {
-  @Input() selectedPerson: PersonViewModel | null = null;
   @Output() save = new EventEmitter<PersonViewModel>();
+  @Output() add = new EventEmitter<PersonViewModel>();
   @Output() cancel = new EventEmitter<void>();
+  @Input() selectedPerson: PersonViewModel | null = null;
   @Input() departments: DepartmentViewModel[] = [];
-  @Input() spinnerAction: 'save' | 'cancel' | null = null;
+  @Input() spinnerAction: 'save' | 'cancel' | 'add' | null = null;
+  @Input() person!: PersonViewModel;
+  @Input() mode: 'add' | 'edit' | null = null;
 
   personForm!: FormGroup;
   private departmentsLoaded = false;
@@ -30,7 +33,6 @@ export class PersonEditorComponent implements OnChanges {
   getDepartments(): void {
     this.departmentService.getListOfDepartment().subscribe({
       next: (result) => {
-        console.log("-------------------------------------: " + JSON.stringify(result));
         this.departments = result;
         this.departmentsLoaded = true;
         this.tryPatchForm();
@@ -49,6 +51,7 @@ export class PersonEditorComponent implements OnChanges {
     if (!this.personForm || !this.selectedPerson || !this.departmentsLoaded) return;
 
     this.personForm.patchValue({
+      id: this.selectedPerson.id,
       firstName: this.selectedPerson.firstName,
       lastName: this.selectedPerson.lastName,
       dob: this.selectedPerson.dob,
@@ -58,6 +61,7 @@ export class PersonEditorComponent implements OnChanges {
 
   initForm(): void {
     this.personForm = this.fb.group({
+      id: [0],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dob: ['', Validators.required],
@@ -79,12 +83,12 @@ export class PersonEditorComponent implements OnChanges {
   }
 
   onSubmit(): void {
-    if (this.personForm.valid) {
-      const updatedPerson: PersonViewModel = {
-        ...this.selectedPerson,
-        ...this.personForm.value
-      };
-      this.save.emit(updatedPerson);
+    const personData = this.personForm.value as PersonViewModel;
+
+    if (this.mode === 'add') {
+      this.add.emit(personData);
+    } else if (this.mode === 'edit') {
+      this.save.emit(personData);
     }
   }
 
