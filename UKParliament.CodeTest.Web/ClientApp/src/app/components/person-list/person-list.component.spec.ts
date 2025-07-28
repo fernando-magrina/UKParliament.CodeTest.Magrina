@@ -16,7 +16,7 @@ describe('PersonListComponent', () => {
         PersonService,
         { provide: 'BASE_URL', useValue: '' }
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] // or add missing components to declarations
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PersonListComponent);

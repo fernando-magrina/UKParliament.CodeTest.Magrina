@@ -33,9 +33,9 @@ namespace UKParliament.CodeTest.Tests
         {
             // Arrange
             var peopleList = new List<Person>
-                            {
-                                new Person { Id = 1, FirstName = "Alice", LastName = "Smith" }
-                            };
+            {
+                new Person { Id = 1, FirstName = "Alice", LastName = "Smith" }
+            };
 
             _repoMock.Setup(r => r.GetAllPeopleDataAsync()).ReturnsAsync(peopleList);
 

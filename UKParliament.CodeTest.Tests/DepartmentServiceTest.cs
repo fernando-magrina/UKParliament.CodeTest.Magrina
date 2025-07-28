@@ -15,10 +15,10 @@ namespace UKParliament.CodeTest.Tests
         {
             var mockRepo = new Mock<IDepartmentRepository>();
             mockRepo.Setup(r => r.GetDepartmentsAsync()).ReturnsAsync(new List<Department>
-    {
-        new Department { Id = 1, Name = "HR" },
-        new Department { Id = 2, Name = "Finance" }
-    });
+            {
+                new Department { Id = 1, Name = "HR" },
+                new Department { Id = 2, Name = "Finance" }
+            });
 
             var service = new DepartmentService(mockRepo.Object);
 

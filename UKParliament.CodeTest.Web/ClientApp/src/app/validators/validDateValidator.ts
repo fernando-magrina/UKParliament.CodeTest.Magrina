@@ -17,7 +17,7 @@ export function validDateValidator(): ValidatorFn {
 
 export function pastDateValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value;
-  if (!value) return null; // 'required' handles this
+  if (!value) return null;
 
   const inputDate = new Date(value);
   if (!(inputDate instanceof Date) || isNaN(inputDate.getTime())) return null;
