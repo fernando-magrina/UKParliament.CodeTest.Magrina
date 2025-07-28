@@ -1,33 +1,68 @@
 <div class="row align-items-center">
-  <div class="col-5">
-    <h2 *ngIf="selectedPerson">Edit Person</h2>
-    <h2 *ngIf="!selectedPerson">Add Person</h2>
+  <div class="col-6">
+    <h2 *ngIf="mode === 'edit'">Edit Person</h2>
+    <h2 *ngIf="mode === 'add'">Add Person</h2>
   </div>
   <div class="col-1 text-center">
     <h1>
-      <i *ngIf="selectedPerson" class="bi bi-pencil-fill" aria-hidden="true"></i>
-      <i *ngIf="!selectedPerson" class="bi bi-person-plus-fill" aria-hidden="true"></i>
+      <i *ngIf="mode === 'edit'" class="bi bi-pencil-fill" aria-hidden="true"></i>
+      <i *ngIf="mode === 'add'" class="bi bi-person-plus-fill" aria-hidden="true"></i>
     </h1>
   </div>
 </div>
 
 <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="id" />
+
   <label>First Name</label>
   <input formControlName="firstName" type="text" />
+  <div class="error" *ngIf="personForm.get('firstName')?.touched && personForm.get('firstName')?.invalid">
+    <small *ngIf="personForm.get('firstName')?.errors?.['required']">First name is required.</small>
+    <small *ngIf="personForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters.</small>
+    <small *ngIf="personForm.get('firstName')?.errors?.['pattern']">Only letters, spaces, apostrophes and hyphens allowed.</small>
+  </div>
 
   <label>Last Name</label>
   <input formControlName="lastName" type="text" />
+  <div class="error" *ngIf="personForm.get('lastName')?.touched && personForm.get('lastName')?.invalid">
+    <small *ngIf="personForm.get('lastName')?.errors?.['required']">Last name is required.</small>
+    <small *ngIf="personForm.get('lastName')?.errors?.['minlength']">Minimum 2 characters.</small>
+    <small *ngIf="personForm.get('lastName')?.errors?.['pattern']">Only letters, spaces, apostrophes and hyphens allowed.</small>
+  </div>
 
   <label>Date of Birth</label>
   <input formControlName="dob" type="date" />
+  <div class="error" *ngIf="personForm.get('dob')?.touched && personForm.get('dob')?.invalid">
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['required']">Date of birth is required.</small>
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['invalidDate']">Invalid date format.</small>
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['futureDate']">Date of birth must be in the past.</small>
+  </div>
 
-  <label>Department</label>
-  <select formControlName="department">
-    <option *ngFor="let dept of departments" [ngValue]="dept">
-      {{ dept.name }}
-    </option>
+  <label>Email</label>
+  <input formControlName="email" type="email" />
+  <div *ngIf="personForm.get('email')?.touched && personForm.get('email')?.invalid">
+    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['required']">Email is required.</small>
+    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['pattern']">Email format is invalid (please use this format 'user&#64;example.com').</small>
+  </div>
+
+  <label for="department">Department</label>
+  <select id="department" formControlName="department" class="department-dropdown">
+    <option [ngValue]="null" disabled selected>Please select...</option>
+    <option *ngFor="let dept of departments" [ngValue]="dept">{{ dept.name }}</option>
   </select>
+  <div class="error" *ngIf="personForm.get('department')?.touched && personForm.get('department')?.invalid">
+    <small>Please select a department.</small>
+  </div>
 
-  <button type="submit">Save</button>
-  <button type="button" (click)="clear()">Cancel</button>
+  <div class="button-group">
+    <button type="submit" [disabled]="personForm.invalid || spinnerAction === 'save'">
+      <span *ngIf="spinnerAction === 'save'" class="spinner-border spinner-border-sm" role="status"></span>
+      <span *ngIf="spinnerAction !== 'save'">{{ mode === 'add' ? 'Add' : 'Save' }}</span>
+    </button>
+
+    <button type="button" (click)="clear()" [disabled]="spinnerAction === 'cancel'">
+      <span *ngIf="spinnerAction === 'cancel'" class="spinner-border spinner-border-sm" role="status"></span>
+      <span *ngIf="spinnerAction !== 'cancel'">Cancel</span>
+    </button>
+  </div>
 </form>

@@ -1,44 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-using UKParliament.CodeTest.Data;
+﻿using UKParliament.CodeTest.Data;
+using UKParliament.CodeTest.Data.Repositories.Interfaces;
 using UKParliament.CodeTest.Services.Interfaces;
 
 namespace UKParliament.CodeTest.Services;
 
 public class DepartmentService : IDepartmentService
 {
-    private readonly PersonManagerContext context;
+    private readonly IDepartmentRepository repository;
 
-    public DepartmentService(PersonManagerContext context)
+    public DepartmentService(IDepartmentRepository repository)
     {
-        this.context = context;
-    }
-
-    public async Task<Department?> GetDepartmentByIdAsync(int id)
-    {
-        var person = await this.context.Departments.FindAsync(id);
-
-        if (person == null)
-            throw new KeyNotFoundException($"Department with ID {id} not found.");
-
-        return new Department
-        {
-            Id = person.Id,
-            Name = person.Name,
-        };
+        this.repository = repository;
     }
 
     public async Task<List<Department>> GetDepartmentsAsync()
     {
-        var people = await this.context.Departments.ToListAsync();
-
-        if (people == null)
-            throw new KeyNotFoundException($"No Department found.");
-
-        return people.Select(p => new Department
-        {
-            Id = p.Id,
-            Name = p.Name,
-        }).ToList();
+        var data = await repository.GetDepartmentsAsync();
+        if (data == null) throw new KeyNotFoundException("No Department found.");
+        return data.Select(p => new Department { Id = p.Id, Name = p.Name }).ToList();
     }
 }

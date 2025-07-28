@@ -6,5 +6,8 @@
     <span class="department">{{ person.department.name || 'N/A' }}</span>
   </li>
 </ul>
-<button (click)="addNewPerson()">Add New Person</button>
 
+<button (click)="addNewPerson()" [disabled]="spinnerAction === 'add'">
+  <span *ngIf="spinnerAction === 'add'" class="spinner-border spinner-border-sm" role="status"></span>
+  <span *ngIf="spinnerAction !== 'add'">Add New Person</span>
+</button>

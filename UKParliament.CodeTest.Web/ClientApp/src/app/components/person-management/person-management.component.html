@@ -1,11 +1,22 @@
 <div [ngClass]="isMobile ? 'vertical-container' : 'app-container'">
-  <div class="list-panel">
-    <app-person-list (select)="onPersonSelected($event)"></app-person-list>
-  </div>
   <div class="editor-panel">
-    <app-person-editor [selectedPerson]="selectedPerson"
+    <div class="welcome" *ngIf="!selectedPerson">
+      <h1>Welcome</h1>
+      <p>
+        To get started, please select a person from the list to view or edit their details,
+        or click <strong>"Add New Person"</strong> to create a new profile.
+      </p>
+    </div>
+    <app-person-editor *ngIf="selectedPerson"
+                       [selectedPerson]="selectedPerson"
+                       [spinnerAction]="spinnerAction"
+                       [mode]="mode"
                        (save)="onSave($event)"
+                       (add)="onAdd($event)"
                        (cancel)="onCancel()">
     </app-person-editor>
+  </div>
+  <div class="list-panel">
+    <app-person-list (select)="onPersonSelected($event)"></app-person-list>
   </div>
 </div>
