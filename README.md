@@ -6,7 +6,7 @@ To keep things simple, I avoided bringing in extra libraries. For example, inste
 
 ## Deployed to Azure App Service using GitHub Actions.
 
-I also deployed the code to my private Azure App Serive and can be accessed here:
+I also deployed the code to my private Azure App Service and can be accessed here:
 
 https://uk-fernando-magrina-interview.azurewebsites.net/
 
