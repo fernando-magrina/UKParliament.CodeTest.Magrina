@@ -12,6 +12,8 @@ But when I tried running the Angular tests, I got an error saying it needed Node
 
 I switched to v20.19.4, ran everything again, and the Jasmine tests now work fine.
 
+<img width="1429" height="177" alt="image" src="https://github.com/user-attachments/assets/2479f888-fbac-427e-ac5c-3a8b40b694e5" />
+
 ## Tests
 
 I focused on testing `person-editor.component.spec` since that’s where most of the key functionality and validations are.
