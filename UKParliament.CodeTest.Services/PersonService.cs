@@ -7,12 +7,10 @@ namespace UKParliament.CodeTest.Services;
 public class PersonService : IPersonService
 {
     private readonly IPersonRepository personRepository;
-    private readonly IDepartmentRepository depotRepository;
 
-    public PersonService(IPersonRepository personRepository, IDepartmentRepository depotRepository)
+    public PersonService(IPersonRepository personRepository)
     {
         this.personRepository = personRepository;
-        this.depotRepository = depotRepository;
     }
 
     public async Task<List<Person>> GetPeopleAsync()
@@ -27,15 +25,17 @@ public class PersonService : IPersonService
 
     public async Task<bool> UpdatePersonAsync(Person person)
     {
+        Validation.PersonValidation.ValidatePerson(person);
         return await this.personRepository.UpdatePersonDataAsync(person);
     }
 
     public async Task<bool> AddPersonAsync(Person person)
     {
+        Validation.PersonValidation.ValidatePerson(person);
+
         person.DepartmentId = person.Department.Id;
         person.Department = null;
 
-        var addedPerson = await this.personRepository.AddAsync(person);
-        return true;
+        return await this.personRepository.AddAsync(person);
     }
 }

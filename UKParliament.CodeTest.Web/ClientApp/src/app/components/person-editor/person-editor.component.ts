@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonViewModel } from '../../models/person-view-model';
 import { DepartmentViewModel } from '../../models/department-view-model';
 import { DepartmentService } from '../../services/department.service';
-import { validDateValidator } from '../../validators/validDateValidator';
+import { pastDateValidator, validDateValidator } from '../../validators/validDateValidator';
 
 @Component({
   selector: 'app-person-editor',
@@ -73,8 +73,10 @@ export class PersonEditorComponent implements OnChanges {
         Validators.required,
         Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\\s\'-]{2,50}$'),
         Validators.minLength(2)]],
-      dob: [null, [Validators.required, validDateValidator()]],
-      email: ['', [Validators.required, Validators.email]],
+      dob: [null, [Validators.required, validDateValidator(), pastDateValidator]],
+      email: ['', [
+        Validators.required,
+        Validators.pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)]],
       department: [null, Validators.required]
     });
 

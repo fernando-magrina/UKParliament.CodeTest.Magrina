@@ -24,14 +24,20 @@ namespace UKParliament.CodeTest.Data.Repositories
         {
             this.context.People.Update(person);
             var updatedPerson = await this.context.SaveChangesAsync();
-            return updatedPerson > 0;
+            if (updatedPerson == 0)
+                throw new Exception();
+
+            return true;
         }
 
         public async Task<bool> AddAsync(Person person)
         {
             this.context.People.Add(person);
             var addedPerson = await this.context.SaveChangesAsync();
-            return addedPerson > 0;
+            if (addedPerson == 0)
+                throw new Exception();
+
+            return true;
         }
     }
 }

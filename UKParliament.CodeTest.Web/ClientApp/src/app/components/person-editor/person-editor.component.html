@@ -33,14 +33,16 @@
   <label>Date of Birth</label>
   <input formControlName="dob" type="date" />
   <div class="error" *ngIf="personForm.get('dob')?.touched && personForm.get('dob')?.invalid">
-    <small>Date of birth is required.</small>
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['required']">Date of birth is required.</small>
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['invalidDate']">Invalid date format.</small>
+    <small class="text-danger" *ngIf="personForm.get('dob')?.errors?.['futureDate']">Date of birth must be in the past.</small>
   </div>
 
   <label>Email</label>
   <input formControlName="email" type="email" />
   <div *ngIf="personForm.get('email')?.touched && personForm.get('email')?.invalid">
     <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['required']">Email is required.</small>
-    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['email']">Invalid email format.</small>
+    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['pattern']">Email format is invalid (please use this format 'user&#64;example.com').</small>
   </div>
 
   <label for="department">Department</label>
