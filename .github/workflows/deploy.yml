@@ -1,31 +1,46 @@
-name: Deploy .NET App to Azure App Service
+name: Deploy Angular + .NET 8 App to Azure
 
 on:
   push:
     branches:
-      - main  # or your branch name
+      - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
 
-      - name: Publish
-        run: |
-          dotnet publish -c Release -o ./publish
+    - name: Install Angular dependencies
+      run: |
+        cd ClientApp
+        npm install
 
-      - name: Deploy via ZIP using publish profile
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: uk-fernando-magrina-interview
-          slot-name: production
-          publish-profile: ${{ secrets.AZURE_WEBAPP_USERNAME }}:${{ secrets.AZURE_WEBAPP_PASSWORD }}
-          package: ./publish
+    - name: Build Angular app
+      run: |
+        cd ClientApp
+        npm run build -- --output-path=../wwwroot --configuration production
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Publish .NET app
+      run: dotnet publish ./UKParliament.CodeTest.Web/UKParliament.CodeTest.Web.csproj -c Release -o ./publish
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: uk-fernando-magrina-interview
+        slot-name: production
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: ./publish
