@@ -29,7 +29,6 @@ export class PersonManagementComponent {
     });
   }
 
-
   onPersonSelected(selection: { person: PersonViewModel, mode: 'add' | 'edit' }): void {
     this.selectedPerson = selection.person;
     this.mode = selection.mode;
@@ -83,9 +82,4 @@ export class PersonManagementComponent {
       this.selectedPerson = null;
     }, 500);
   }
-
-  //addNewPerson(): void {
-  //  this.personEditor.resetForm();
-  //  this.selectedPerson = null;
-  //}
 }

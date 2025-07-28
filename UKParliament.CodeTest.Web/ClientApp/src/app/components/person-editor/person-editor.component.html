@@ -19,6 +19,7 @@
   <div class="error" *ngIf="personForm.get('firstName')?.touched && personForm.get('firstName')?.invalid">
     <small *ngIf="personForm.get('firstName')?.errors?.['required']">First name is required.</small>
     <small *ngIf="personForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters.</small>
+    <small *ngIf="personForm.get('firstName')?.errors?.['pattern']">Only letters, spaces, apostrophes and hyphens allowed.</small>
   </div>
 
   <label>Last Name</label>
@@ -26,6 +27,7 @@
   <div class="error" *ngIf="personForm.get('lastName')?.touched && personForm.get('lastName')?.invalid">
     <small *ngIf="personForm.get('lastName')?.errors?.['required']">Last name is required.</small>
     <small *ngIf="personForm.get('lastName')?.errors?.['minlength']">Minimum 2 characters.</small>
+    <small *ngIf="personForm.get('lastName')?.errors?.['pattern']">Only letters, spaces, apostrophes and hyphens allowed.</small>
   </div>
 
   <label>Date of Birth</label>

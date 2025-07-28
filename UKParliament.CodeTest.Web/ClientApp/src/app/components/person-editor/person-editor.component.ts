@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonViewModel } from '../../models/person-view-model';
 import { DepartmentViewModel } from '../../models/department-view-model';
 import { DepartmentService } from '../../services/department.service';
+import { validDateValidator } from '../../validators/validDateValidator';
 
 @Component({
   selector: 'app-person-editor',
@@ -64,9 +65,15 @@ export class PersonEditorComponent implements OnChanges {
   initForm(): void {
     this.personForm = this.fb.group({
       id: [0],
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
-      dob: ['', Validators.required],
+      firstName: ['', [
+        Validators.required,
+        Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\\s\'-]{2,50}$'),
+        Validators.minLength(2)]],
+      lastName: ['', [
+        Validators.required,
+        Validators.pattern('^[A-Za-zÀ-ÖØ-öø-ÿ\\s\'-]{2,50}$'),
+        Validators.minLength(2)]],
+      dob: [null, [Validators.required, validDateValidator()]],
       email: ['', [Validators.required, Validators.email]],
       department: [null, Validators.required]
     });
@@ -97,7 +104,7 @@ export class PersonEditorComponent implements OnChanges {
   }
 
   clear(): void {
-    this.resetForm(); 
+    this.resetForm();
     this.cancel.emit();
   }
 
