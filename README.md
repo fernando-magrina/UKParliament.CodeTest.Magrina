@@ -16,9 +16,9 @@ https://uk-fernando-magrina-interview.azurewebsites.net/
 
 - But when I tried running the Angular tests, I got an error saying it needed Node.js v20.19 or higher.
 
-- I switched to v20.19.4, ran everything again, and the Jasmine tests now work fine.
+    <img width="1329" height="147" alt="image" src="https://github.com/user-attachments/assets/2479f888-fbac-427e-ac5c-3a8b40b694e5" />
 
-<img width="1429" height="177" alt="image" src="https://github.com/user-attachments/assets/2479f888-fbac-427e-ac5c-3a8b40b694e5" />
+- I switched to v20.19.4, ran everything again, and the Jasmine tests now work fine.
 
 ## Tests
 
