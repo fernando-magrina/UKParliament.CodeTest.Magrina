@@ -18,15 +18,15 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-
+   
     - name: Install Angular dependencies
       run: |
-        cd ClientApp
+        cd UKParliament.CodeTest.Web/ClientApp
         npm install
 
     - name: Build Angular app
       run: |
-        cd ClientApp
+        cd UKParliament.CodeTest.Web/ClientApp
         npm run build -- --output-path=../wwwroot --configuration production
 
     - name: Setup .NET
