@@ -16,18 +16,39 @@
 
   <label>First Name</label>
   <input formControlName="firstName" type="text" />
+  <div class="error" *ngIf="personForm.get('firstName')?.touched && personForm.get('firstName')?.invalid">
+    <small *ngIf="personForm.get('firstName')?.errors?.['required']">First name is required.</small>
+    <small *ngIf="personForm.get('firstName')?.errors?.['minlength']">Minimum 2 characters.</small>
+  </div>
 
   <label>Last Name</label>
   <input formControlName="lastName" type="text" />
+  <div class="error" *ngIf="personForm.get('lastName')?.touched && personForm.get('lastName')?.invalid">
+    <small *ngIf="personForm.get('lastName')?.errors?.['required']">Last name is required.</small>
+    <small *ngIf="personForm.get('lastName')?.errors?.['minlength']">Minimum 2 characters.</small>
+  </div>
 
   <label>Date of Birth</label>
   <input formControlName="dob" type="date" />
+  <div class="error" *ngIf="personForm.get('dob')?.touched && personForm.get('dob')?.invalid">
+    <small>Date of birth is required.</small>
+  </div>
+
+  <label>Email</label>
+  <input formControlName="email" type="email" />
+  <div *ngIf="personForm.get('email')?.touched && personForm.get('email')?.invalid">
+    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['required']">Email is required.</small>
+    <small class="text-danger" *ngIf="personForm.get('email')?.errors?.['email']">Invalid email format.</small>
+  </div>
 
   <label for="department">Department</label>
   <select id="department" formControlName="department" class="department-dropdown">
     <option [ngValue]="null" disabled selected>Please select...</option>
     <option *ngFor="let dept of departments" [ngValue]="dept">{{ dept.name }}</option>
   </select>
+  <div class="error" *ngIf="personForm.get('department')?.touched && personForm.get('department')?.invalid">
+    <small>Please select a department.</small>
+  </div>
 
   <div class="button-group">
     <button type="submit" [disabled]="personForm.invalid || spinnerAction === 'save'">

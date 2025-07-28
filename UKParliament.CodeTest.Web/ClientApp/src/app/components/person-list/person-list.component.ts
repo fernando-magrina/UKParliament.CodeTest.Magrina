@@ -54,6 +54,7 @@ export class PersonListComponent {
       firstName: '',
       lastName: '',
       dob: '',
+      email: '',
       department: null!
     };
 

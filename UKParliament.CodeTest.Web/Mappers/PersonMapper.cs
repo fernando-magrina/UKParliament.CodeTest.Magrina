@@ -13,6 +13,7 @@ namespace UKParliament.CodeTest.Web.Mappers
                 FirstName = vm.FirstName,
                 LastName = vm.LastName,
                 DOB = vm.DOB,
+                Email = vm.Email,
                 Department = vm.Department
             };
 
@@ -23,6 +24,7 @@ namespace UKParliament.CodeTest.Web.Mappers
                 FirstName = p.FirstName,
                 LastName = p.LastName,
                 DOB = p.DOB,
+                Email = p.Email,
                 Department = p.Department
             };
     }

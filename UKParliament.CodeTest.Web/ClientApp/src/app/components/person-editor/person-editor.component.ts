@@ -9,6 +9,7 @@ import { DepartmentService } from '../../services/department.service';
   templateUrl: './person-editor.component.html',
   styleUrls: ['./person-editor.component.scss']
 })
+
 export class PersonEditorComponent implements OnChanges {
   @Output() save = new EventEmitter<PersonViewModel>();
   @Output() add = new EventEmitter<PersonViewModel>();
@@ -55,6 +56,7 @@ export class PersonEditorComponent implements OnChanges {
       firstName: this.selectedPerson.firstName,
       lastName: this.selectedPerson.lastName,
       dob: this.selectedPerson.dob,
+      email: this.selectedPerson.email,
       department: this.departments.find(d => d.id === this.selectedPerson?.department?.id)
     });
   }
@@ -62,9 +64,10 @@ export class PersonEditorComponent implements OnChanges {
   initForm(): void {
     this.personForm = this.fb.group({
       id: [0],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
       dob: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       department: [null, Validators.required]
     });
 
@@ -78,6 +81,7 @@ export class PersonEditorComponent implements OnChanges {
       firstName: this.selectedPerson?.firstName || '',
       lastName: this.selectedPerson?.lastName || '',
       dob: this.selectedPerson?.dob || '',
+      email: this.selectedPerson?.email || '',
       department: this.departments.find(d => d.id === this.selectedPerson?.department?.id) || null
     });
   }
@@ -102,6 +106,7 @@ export class PersonEditorComponent implements OnChanges {
       firstName: '',
       lastName: '',
       dob: '',
+      email: '',
       department: null
     });
   }

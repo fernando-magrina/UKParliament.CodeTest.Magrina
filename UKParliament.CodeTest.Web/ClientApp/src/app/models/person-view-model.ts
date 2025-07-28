@@ -6,4 +6,5 @@ export interface PersonViewModel {
   lastName: string;
   dob: string;
   department: DepartmentViewModel;
+  email: string;
 }
