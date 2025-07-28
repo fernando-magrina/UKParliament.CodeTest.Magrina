@@ -20,8 +20,12 @@ https://uk-fernando-magrina-interview.azurewebsites.net/
 
 - I switched to v20.19.4, ran everything again, and the Jasmine tests now work fine.
 
-## Tests
+## Front-end
 
-I focused on testing `person-editor.component.spec` since that’s where most of the key functionality and validations are.
+- Tests
+  
+  I focused on testing `person-editor.component.spec` since that’s where most of the key functionality and validations are.
 
-I reused the edit-person section for both creating and updating users, so I removed the `getById` method as it wasn’t needed anymore.
+- Code
+  
+  I reused the edit-person section for both creating and updating users, so I removed the `getById` method as it wasn’t needed anymore.
