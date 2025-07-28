@@ -4,6 +4,10 @@ My main goal was to keep everything as simple as possible, that’s something I 
 
 To keep things simple, I avoided bringing in extra libraries. For example, instead of using AutoMapper and FluentValidation (which I do like), I handled mapping and validations manually to keep the code straightforward.
 
+## Deployed to Azure App Service using GitHub Actions.
+
+I also deployed the code to my private Azure App Serive and can be accessed here https://uk-fernando-magrina-interview.azurewebsites.net/
+
 ## Node.js Version
 
 - I started the project using Node.js v20.16.0 LTS, as mentioned in the README from UK Parliament - Product Team Home Exercise.
