@@ -1,19 +1,19 @@
-# UK Parliament - Product Team Home Exercise for Senior Developer
+## Main Goal
 
-## Dependencies
-Please ensure you have the following installed:
-* .NET 8 SDK (you may need to ensure your Visual Studio installation is fully up to date)
-* Node v20.16.0 LTS
+My main goal was to keep everything as simple as possible, that’s something I always try to stick to when coding. I focused on exactly what was asked in the requirements, with just a couple of small extras. For example, I added an email field, which I thought made sense and still fits within the MVP approach.
 
-## Introduction
+To keep things simple, I avoided bringing in extra libraries. For example, instead of using AutoMapper and FluentValidation (which I do like), I handled mapping and validations manually to keep the code straightforward.
 
-Thanks for doing our recruitment home exercise. We have written a template solution for you, to save you from having to do too much setup.
+## Node.js Version
 
-* Clone this repository, and open the solution
-* Set **UKParliament.CodeTest.Web** as the startup project
-* Build and run it (NPM should install all the dependencies automatically)
-* Instructions have been provided for you within the solution and these will display on the home page. The home page also shows the assessment criteria for the test. **You should aim to satisfy all points on it.**
+I started the project using Node.js v20.16.0 LTS, as mentioned in the README.
 
-## Submitting your test
-* After you have complete this test please host your solution on GitHub (or another git based hosting platform)
-* Provide us with a link so we can clone your solution
+But when I tried running the Angular tests, I got an error saying it needed Node.js v20.19 or higher.
+
+I switched to v20.19.4, ran everything again, and the Jasmine tests now work fine.
+
+## Tests
+
+I focused on testing `person-editor.component.spec` since that’s where most of the key functionality and validations are.
+
+I reused the edit-person section for both creating and updating users, so I removed the `getById` method as it wasn’t needed anymore.
